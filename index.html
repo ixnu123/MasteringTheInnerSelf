@@ -25,7 +25,7 @@
         }
 
         html {
-            scroll-behavior: smooth; /* Kunci untuk animasi scroll halus saat klik tombol */
+            scroll-behavior: smooth;
         }
 
         body {
@@ -40,10 +40,31 @@
             font-weight: 400;
         }
 
-        img {
+        /* --- GLOBAL IMAGE FRAME STYLE (BARU) --- */
+        /* Ini akan memberikan bingkai elegan ke gambar di Hero, Showcase, dan Gallery */
+        .hero-image img, 
+        .showcase-image img, 
+        .gallery img {
             max-width: 100%;
             height: auto;
             display: block;
+            
+            /* ELEGANT FRAME STYLING */
+            background-color: #ffffff; /* Warna dasar bingkai (putih) */
+            padding: 15px; /* Ketebalan bingkai putih */
+            border: 1px solid rgba(0,0,0,0.08); /* Garis tepi tipis agar terlihat rapi di background putih */
+            border-radius: 3px; /* Sudut sedikit melengkung (tidak tajam) */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2); /* Bayangan lembut untuk efek 3D */
+            
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Efek hover khusus untuk semua gambar */
+        .hero-image img:hover, 
+        .showcase-image img:hover, 
+        .gallery img:hover {
+            transform: scale(1.02); /* Zoom sedikit saat ditunjuk mouse */
+            box-shadow: 0 20px 45px rgba(0,0,0,0.25); /* Bayangan menajam saat hover */
         }
 
         .container {
@@ -60,7 +81,7 @@
             letter-spacing: 2px;
             font-size: 0.8rem;
             text-decoration: none;
-            transition: all 0.4s ease; /* Transisi sedikit diperlambat agar lebih elegan */
+            transition: all 0.4s ease;
             border: 1px solid transparent;
             cursor: pointer;
             position: relative;
@@ -76,7 +97,7 @@
             background-color: transparent;
             border-color: var(--accent);
             color: var(--accent);
-            transform: translateY(-3px); /* Efek naik sedikit saat hover */
+            transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
@@ -94,7 +115,6 @@
         }
 
         /* --- ANIMATION CLASSES --- */
-        /* Kelas awal: tidak terlihat dan sedikit turun ke bawah */
         .fade-in-section {
             opacity: 0;
             transform: translateY(30px);
@@ -102,13 +122,11 @@
             will-change: opacity, transform;
         }
 
-        /* Kelas aktif: saat elemen masuk layar, menjadi terlihat dan naik ke posisi asli */
         .fade-in-section.is-visible {
             opacity: 1;
             transform: none;
         }
 
-        /* Delay utilities untuk elemen berurutan */
         .delay-200 { transition-delay: 0.2s; }
         .delay-400 { transition-delay: 0.4s; }
 
@@ -149,16 +167,6 @@
             margin-bottom: 3rem;
             max-width: 500px;
             opacity: 0.9;
-        }
-
-        .hero-image img {
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            border-radius: 4px;
-            transition: transform 0.6s ease;
-        }
-        
-        .hero-image img:hover {
-            transform: scale(1.02); /* Efek zoom halus pada gambar utama */
         }
 
         /* --- ABOUT / EMOTIONAL HOOK --- */
@@ -247,8 +255,8 @@
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-            padding: 1rem;
+            gap: 2rem; /* Jarak antar frame diperlebar sedikit */
+            padding: 2rem;
         }
         
         /* --- FOOTER --- */
@@ -268,8 +276,14 @@
             }
             .hero-text h1 { font-size: 2.5rem; }
             .hero-text p { margin: 0 auto 2rem auto; }
-            /* Memperbaiki urutan tampilan di mobile agar gambar ada di atas text jika diinginkan */
             .showcase-image { order: -1; } 
+            
+            /* Mengurangi padding frame di layar HP agar gambar tidak terlalu kecil */
+            .hero-image img, 
+            .showcase-image img, 
+            .gallery img {
+                padding: 8px;
+            }
         }
     </style>
 </head>
@@ -371,25 +385,21 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Kita menggunakan Intersection Observer API untuk performa yang lebih baik
             const observerOptions = {
-                root: null, // viewport
+                root: null,
                 rootMargin: '0px',
-                threshold: 0.1 // Animasi mulai saat 10% elemen terlihat
+                threshold: 0.1
             };
 
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // Tambahkan class 'is-visible' saat elemen masuk layar
                         entry.target.classList.add('is-visible');
-                        // Stop mengamati elemen ini setelah animasi berjalan (agar tidak berulang)
                         observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
 
-            // Pilih semua elemen yang memiliki class 'fade-in-section'
             const fadeElements = document.querySelectorAll('.fade-in-section');
             fadeElements.forEach(el => observer.observe(el));
         });
