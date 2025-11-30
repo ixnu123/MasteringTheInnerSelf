@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering The Inner Self | Guided Journal</title>
+    <style>
+        /* --- GLOBAL STYLES --- */
+        :root {
+            --bg-dark: #121212;
+            --bg-light: #f9f9f9;
+            --text-main: #333333;
+            --text-light: #e0e0e0;
+            --accent: #ffffff;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Lato', sans-serif;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Kunci untuk animasi scroll halus saat klik tombol */
+        }
+
+        body {
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* --- BUTTONS --- */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: all 0.4s ease; /* Transisi sedikit diperlambat agar lebih elegan */
+            border: 1px solid transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-3px); /* Efek naik sedikit saat hover */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn-dark {
+            background-color: var(--bg-dark);
+            color: var(--accent);
+        }
+
+        .btn-dark:hover {
+            background-color: transparent;
+            border-color: var(--bg-dark);
+            color: var(--bg-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* --- ANIMATION CLASSES --- */
+        /* Kelas awal: tidak terlihat dan sedikit turun ke bawah */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            will-change: opacity, transform;
+        }
+
+        /* Kelas aktif: saat elemen masuk layar, menjadi terlihat dan naik ke posisi asli */
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Delay utilities untuk elemen berurutan */
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-400 { transition-delay: 0.4s; }
+
+        /* --- HERO SECTION --- */
+        header {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .hero-text h2 {
+            font-size: 1.5rem;
+            font-style: italic;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            max-width: 500px;
+            opacity: 0.9;
+        }
+
+        .hero-image img {
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border-radius: 4px;
+            transition: transform 0.6s ease;
+        }
+        
+        .hero-image img:hover {
+            transform: scale(1.02); /* Efek zoom halus pada gambar utama */
+        }
+
+        /* --- ABOUT / EMOTIONAL HOOK --- */
+        .about-section {
+            padding: 8rem 0;
+            background-color: var(--bg-light);
+            text-align: center;
+        }
+
+        .about-text {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .about-text h3 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--bg-dark);
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        /* --- FEATURES GRID --- */
+        .features {
+            padding: 6rem 0;
+            background-color: #fff;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .feature-card {
+            padding: 2rem;
+        }
+
+        .feature-card h4 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        /* --- INTERIOR SHOWCASE --- */
+        .showcase {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding: 8rem 0;
+        }
+
+        .showcase-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .showcase-text h3 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- QUOTE SECTION --- */
+        .quote-section {
+            padding: 6rem 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        blockquote {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-style: italic;
+            color: var(--bg-dark);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* --- GALLERY --- */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--bg-dark);
+            color: #666;
+            text-align: center;
+            padding: 3rem 0;
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero-content, .showcase-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-text h1 { font-size: 2.5rem; }
+            .hero-text p { margin: 0 auto 2rem auto; }
+            /* Memperbaiki urutan tampilan di mobile agar gambar ada di atas text jika diinginkan */
+            .showcase-image { order: -1; } 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container hero-content">
+            <div class="hero-text fade-in-section">
+                <h1>Mastering<br>The Inner Self</h1>
+                <h2>Crafting My Own Masterpiece</h2>
+                <p>
+                    "Journaling isn't just about writing down feelings—it's about understanding yourself."<br>
+                    Discover clarity, growth, and the wisdom hidden within you.
+                </p>
+                <a href="#buy" class="btn btn-primary">Start Your Journey</a>
+            </div>
+            <div class="hero-image fade-in-section delay-200">
+                <img src="atas.jpg" alt="Mastering The Inner Self Book Cover">
+            </div>
+        </div>
+    </header>
+
+    <section class="about-section">
+        <div class="container about-text fade-in-section">
+            <h3>You Don't Need Perfect Words.</h3>
+            <p>
+                I used to think journaling was only for people who loved writing or had their lives all figured out. 
+                I tried to start many times, but I always ended up stopping halfway. 
+                Every time I faced a blank page, I felt lost.
+            </p>
+            <p>
+                <strong>Until I realized:</strong> You just need to start. Pick up your pen, open the first page, and write whatever comes to mind.
+                Because every word you write is a step toward knowing yourself better.
+            </p>
+        </div>
+    </section>
+
+    <section class="showcase">
+        <div class="container showcase-content">
+            <div class="showcase-image fade-in-section">
+                <img src="isi.jpg" alt="Inside the journal">
+            </div>
+            <div class="showcase-text fade-in-section delay-200">
+                <h3>Structured for Growth</h3>
+                <p>This is not just a blank notebook. It is a guided tool designed to help you navigate life's uncertainties.</p>
+                <br>
+                <ul>
+                    <li style="margin-bottom: 1rem; list-style: none;"><strong>✦ Gratitude Journaling</strong><br>Shift negative perspectives to positive ones by recording things you are grateful for daily.</li>
+                    <li style="margin-bottom: 1rem; list-style: none;"><strong>✦ Reflective Journaling</strong><br>Evaluate experiences, understand lessons from each event, and find meaning in your life journey.</li>
+                    <li style="list-style: none;"><strong>✦ Daily Mood & Growth</strong><br>Track your emotional patterns and recognize what triggers your overthinking.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card fade-in-section">
+                    <h4>Clarity</h4>
+                    <p>Journaling helps you see your life with more clarity, understanding your thought patterns and navigating emotions better.</p>
+                </div>
+                <div class="feature-card fade-in-section delay-200">
+                    <h4>Consistency</h4>
+                    <p>With structured daily prompts and weekly reviews, you can build a habit without feeling drained or overwhelmed.</p>
+                </div>
+                <div class="feature-card fade-in-section delay-400">
+                    <h4>Self-Discovery</h4>
+                    <p>Recognize personal values and beliefs. This is a space for reflection, a tool for growth, and a way to become the best version of yourself.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery">
+        <div class="fade-in-section"><img src="1nich.jpg" alt="Book on table"></div>
+        <div class="fade-in-section delay-200"><img src="2nich.jpg" alt="Book angle view"></div>
+        <div class="fade-in-section"><img src="3nich.jpg" alt="Stack of books"></div>
+        <div class="fade-in-section delay-200"><img src="4nich.jpg" alt="Flat lay book"></div>
+    </section>
+
+    <section class="quote-section" id="buy">
+        <div class="container fade-in-section">
+            <blockquote>
+                "You are the author of your own story. Make it a masterpiece."
+            </blockquote>
+            <br><br>
+            <p style="margin-bottom: 2rem;">Mastering The Inner Self: A Blank Page, A New Beginning.</p>
+            
+            <a href="https://a.co/d/8zJS3TS" class="btn btn-dark" target="_blank">Order Your Copy Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Mastering The Inner Self. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Kita menggunakan Intersection Observer API untuk performa yang lebih baik
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.1 // Animasi mulai saat 10% elemen terlihat
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Tambahkan class 'is-visible' saat elemen masuk layar
+                        entry.target.classList.add('is-visible');
+                        // Stop mengamati elemen ini setelah animasi berjalan (agar tidak berulang)
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Pilih semua elemen yang memiliki class 'fade-in-section'
+            const fadeElements = document.querySelectorAll('.fade-in-section');
+            fadeElements.forEach(el => observer.observe(el));
+        });
+    </script>
+
+</body>
+</html>
